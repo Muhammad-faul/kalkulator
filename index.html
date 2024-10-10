@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator dan Konverter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Kalkulator dan Konverter</h1>
+        
+        <div class="tab">
+            <button onclick="showCalculator()">Kalkulator</button>
+            <button onclick="showConverter()">Konverter</button>
+        </div>
+
+        <!-- Kalkulator -->
+        <div id="calculatorSection" class="calculator">
+            <input type="text" id="display" disabled>
+            <div class="buttons">
+                <button onclick="clearDisplay()">C</button>
+                <button onclick="appendToDisplay('7')">7</button>
+                <button onclick="appendToDisplay('8')">8</button>
+                <button onclick="appendToDisplay('9')">9</button>
+                <button onclick="appendToDisplay('*')">*</button>
+                <button onclick="appendToDisplay('1')">1</button>
+                <button onclick="appendToDisplay('2')">2</button>
+                <button onclick="appendToDisplay('3')">3</button>
+                <button onclick="appendToDisplay('+')">+</button>
+                <button onclick="appendToDisplay('4')">4</button>
+                <button onclick="appendToDisplay('5')">5</button>
+                <button onclick="appendToDisplay('6')">6</button>
+                <button onclick="appendToDisplay('-')">-</button>
+                <button onclick="appendToDisplay('/')">/</button>
+                <button onclick="appendToDisplay('0')">0</button>
+                <button onclick="calculateResult()">=</button>
+
+                <div class="feature-slide">
+                    <div class="slide-content" id="feature1">
+                        <button onclick="calculateSqrt()">√</button>
+                        <button onclick="toggleSign()">±</button>
+                        <button onclick="calculateSin()">sin</button>
+                        <button onclick="calculateCos()">cos</button>
+                        <button onclick="calculateTan()">tan</button>
+                        <button onclick="calculateFactorial()">n!</button>
+                        <button onclick="calculatePower()">x^y</button>
+                    </div>
+                    <div class="slide-content" id="feature2" style="display: none;">
+                        <!-- Tambahkan fitur tambahan jika diperlukan -->
+                        <button onclick="appendToDisplay('^')">^</button>
+                        <button onclick="calculateSqrt()">√</button>
+                        <!-- Tambahan fitur lainnya -->
+                    </div>
+                </div>
+                <button class="slide-toggle" onclick="toggleSlide()">🔄</button>
+            </div>
+            
+            <h3>Riwayat</h3>
+            <ul id="historyList"></ul>
+        </div>
+
+        <!-- Konverter -->
+        <div id="converterSection" class="converter" style="display: none;">
+            <div class="conversion-section">
+                <h4>Konverter Mata Uang</h4>
+                <input type="number" id="rupiah" placeholder="Masukkan Rupiah" oninput="convertCurrency()">
+                <p>Dolar: <span id="dollarResult">0</span></p>
+                <p>Euro: <span id="euroResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Panjang</h4>
+                <input type="number" id="cmToMeter" placeholder="Masukkan cm" oninput="convertLength()">
+                <p>Meter: <span id="meterResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Massa</h4>
+                <input type="number" id="grams" placeholder="Masukkan gram" oninput="convertMass()">
+                <p>Kilogram: <span id="kilogramResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Area</h4>
+                <input type="number" id="cm2ToM2" placeholder="Masukkan cm²" oninput="convertArea()">
+                <p>M²: <span id="m2Result">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Waktu</h4>
+                <input type="number" id="seconds" placeholder="Masukkan detik" oninput="convertTime()">
+                <p>Menit: <span id="minutesResult">0</span></p>
+                <p>Jam: <span id="hoursResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Keuangan</h4>
+                <input type="number" id="principal" placeholder="Uang Pokok" oninput="calculateFinance()">
+                <input type="number" id="rate" placeholder="Suku Bunga (%)" oninput="calculateFinance()">
+                <input type="number" id="timeYears" placeholder="Durasi (tahun)" oninput="calculateFinance()">
+                <p>Total Pembayaran: <span id="financeResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Data</h4>
+                <input type="number" id="megabytes" placeholder="Masukkan MB" oninput="convertData()">
+                <p>Kilobyte: <span id="kilobyteResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Tanggalan</h4>
+                <input type="date" id="dateInput" onchange="calculateDate()">
+                <p>Hari yang lalu: <span id="dateResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Diskon</h4>
+                <input type="number" id="initialPrice" placeholder="Harga Awal" oninput="calculateDiscount()">
+                <input type="number" id="discountPercentage" placeholder="Persentase Diskon (%)" oninput="calculateDiscount()">
+                <p>Harga Akhir: <span id="finalPriceResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Volume</h4>
+                <input type="number" id="m3" placeholder="Masukkan m³" oninput="convertVolume()">
+                <p>cm³: <span id="cm3Result">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Angka</h4>
+                <input type="number" id="decimal" placeholder="Masukkan angka desimal" oninput="convertDecimalToBinary()">
+                <p>Biner: <span id="binaryResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Kecepatan</h4>
+                <input type="number" id="mps" placeholder="Masukkan m/s" oninput="convertSpeed()">
+                <p>km/s: <span id="kpsResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter Suhu</h4>
+                <input type="number" id="celsius" placeholder="Masukkan Celsius" oninput="convertTemperature()">
+                <p>Fahrenheit: <span id="fahrenheitResult">0</span></p>
+                <p>Kelvin: <span id="kelvinResult">0</span></p>
+                <p>Reamur: <span id="reamurResult">0</span></p>
+            </div>
+
+            <div class="conversion-section">
+                <h4>Konverter IMT</h4>
+                <input type="number" id="height" placeholder="Tinggi (cm)" oninput="calculateBMI()">
+                <input type="number" id="weight" placeholder="Berat (kg)" oninput="calculateBMI()">
+                <p>IMT: <span id="bmiResult">0</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
